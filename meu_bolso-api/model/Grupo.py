@@ -3,7 +3,7 @@ from db.database_manager import DatabaseManager
 import os
 
 host = str(os.getenv("DB_HOST"))
-db = DatabaseManager("db_container", os.getenv("DB_USER"), os.getenv("DB_PASSWORD"), os.getenv("DB_NAME"))
+db = DatabaseManager(host, os.getenv("DB_USER"), os.getenv("DB_PASSWORD"), os.getenv("DB_NAME"))
 
 class GrupoBase(BaseModel):
     nome: str
