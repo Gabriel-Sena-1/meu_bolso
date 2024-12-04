@@ -27,36 +27,26 @@ class Gasto:
     def salvar_gasto(self, id_user: int, id_grupo: int):
         db.connect()
         try:
-            # Salvando o gasto
-            if self.id_gasto is None:
-                sql = "INSERT INTO gastos (nome, valor, data) VALUES (%s, %s, %s)"
-                val = (self.nome, self.valor, self.data)
-                db.execute(sql, val)
-                db.commit()
-                self.id_gasto = db.lastrowid  # Obtém o ID gerado para o gasto
-                print(f"Gasto salvo com ID: {self.id_gasto}")
-           
-            sql = "INSERT INTO gasto_grupo (id_gasto, id_grupo) VALUES (%s, %s)"
-            val = (self.id_gasto, id_grupo)
+            # Salvando o gasto com id_grupo
+            sql = "INSERT INTO gastos (nome, valor, data, id_grupo) VALUES (%s, %s, %s, %s)"
+            val = (self.nome, self.valor, self.data, id_grupo)
             db.execute(sql, val)
             db.commit()
+            self.id_gasto = db.lastrowid
 
-            # Associando o usuário ao grupo
+            # Associando o usuário ao grupo (se ainda não estiver associado)
             sql = "INSERT INTO usuario_grupo (id_user, id_grupo) VALUES (%s, %s) ON DUPLICATE KEY UPDATE id_user=id_user"
             val = (id_user, id_grupo)
             db.execute(sql, val)
             db.commit()
 
-            
-
-            return True  # Operação bem-sucedida
+            return True
         except Exception as e:
-            db.rollback()  # Desfaz a transação em caso de erro
+            db.rollback()
             print(f"Erro ao salvar o gasto: {e}")
-            return False  # Indica falha na operação
+            return False
         finally:
             db.disconnect()
-
 
     @staticmethod
     def buscar_por_id(id_gasto: int) -> GastoResponse:
@@ -128,42 +118,13 @@ class Gasto:
         finally:
             db.disconnect()
 
-   
-
-
-    @staticmethod
-    def remover_associacao_grupo(id_gasto: int, id_grupo: int):
-        db.connect()
-        sql = "DELETE FROM gasto_grupo WHERE id_gasto = %s AND id_grupo = %s"
-        val = (id_gasto, id_grupo)
-        db.execute(sql, val)
-        db.commit()
-        db.disconnect()
-
-    @staticmethod
-    def buscar_grupos_associados(id_gasto: int):
-        db.connect()
-        sql = """
-        SELECT g.id_grupo, g.nome
-        FROM grupos g
-        INNER JOIN gasto_grupo gg ON g.id_grupo = gg.id_grupo
-        WHERE gg.id_gasto = %s
-        """
-        val = (id_gasto,)
-        db.execute(sql, val)
-        results = db.fetchall()
-        db.disconnect()
-        grupos = [{"id_grupo": row[0], "nome": row[1]} for row in results]
-        return grupos
-    
     @staticmethod
     def buscar_por_grupo(id_grupo: int):
         db.connect()
         sql = """
-        SELECT g.id_gasto, g.nome, g.valor, g.data
-        FROM gastos g
-        INNER JOIN gasto_grupo gg ON g.id_gasto = gg.id_gasto
-        WHERE gg.id_grupo = %s
+        SELECT id_gasto, nome, valor, data
+        FROM gastos
+        WHERE id_grupo = %s
         """
         val = (id_grupo,)
         db.execute(sql, val)
@@ -180,7 +141,7 @@ class Gasto:
             )
             gastos.append(gasto)
         return gastos
-    
+
     def editar(self) -> bool:
         db.connect()
 
