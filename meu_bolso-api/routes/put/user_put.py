@@ -43,4 +43,4 @@ def editar_usuario(id_user: int, user_data: UserUpdate):
     if not sucesso:
         raise HTTPException(status_code=400, detail="Falha ao editar o usuário.")
     
-    return JSONResponse(content={"message": "Dados atualizados com sucesso!"})
+    return JSONResponse(content={"status": 200, "message": "Dados atualizados com sucesso.", "usuario": usuario.model_dump()})

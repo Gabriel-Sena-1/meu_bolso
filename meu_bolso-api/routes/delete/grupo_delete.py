@@ -18,7 +18,7 @@ def deleta_grupo(grupo_id: int) -> JSONResponse:
         if not sucesso:
             raise HTTPException(status_code=404, detail="Grupo não encontrado ou não pôde ser excluído.")
 
-        return JSONResponse(content={"message": "Grupo excluído com sucesso!"})
+        return JSONResponse(content={"status": 200, "message": "Grupo excluído com sucesso!"})
 
     except Exception as e:
         print(f"Erro ao deletar grupo: {e}")

@@ -15,7 +15,8 @@ def exibe_todos_gastos()->JSONResponse:
     gastos = Gasto.buscar_todos()
     if not gastos:
         raise HTTPException(status_code=404, detail="Nenhum gasto encontrado.")
-    return JSONResponse(content=[gasto.model_dump() for gasto in gastos])
+    gastos = [gasto.model_dump() for gasto in gastos]
+    return JSONResponse(content={"status": "sucess", "resultado": gastos})
 
 @router.get("/{id_grupo}")
 def exibe_gastos_por_grupo(id_grupo: int)->JSONResponse:

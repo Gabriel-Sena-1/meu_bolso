@@ -29,7 +29,7 @@ def atualizar_grupo(id_grupo: int, grupo_data: GrupoUpdate, id_user: int):
         if not sucesso:
             raise HTTPException(status_code=400, detail="Falha ao atualizar o grupo.")
 
-        return JSONResponse(content={"message": "Grupo atualizado com sucesso!"})
+        return JSONResponse(content={"status": 200, "message": "Grupo atualizado com sucesso.", "grupo": grupo.model_dump()})
     except Exception as e:
         print(f"Erro ao atualizar o grupo: {e}")
         raise HTTPException(status_code=500, detail="Erro interno do servidor")

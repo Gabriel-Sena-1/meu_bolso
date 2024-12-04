@@ -1,8 +1,7 @@
 from datetime import datetime
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
-from model.Gasto import Gasto, GastoBase
-from pydantic import BaseModel
+from model.Gasto import Gasto
 
 router = APIRouter()
 
@@ -13,4 +12,4 @@ def deletar_gasto(id_gasto: int) -> JSONResponse:
     if not sucesso:
         raise HTTPException(status_code=404, detail="Houve um problema ao deletar o gasto.")
     
-    return JSONResponse(content={"message": "Sucesso ao deletar o gasto!"})
+    return JSONResponse(content={"status": 200, "message": "Sucesso ao deletar o gasto!"})

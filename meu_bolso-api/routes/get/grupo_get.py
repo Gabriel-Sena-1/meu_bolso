@@ -20,7 +20,7 @@ def retorna_todos_grupos() -> JSONResponse:
             raise HTTPException(status_code=404, detail="Nenhum grupo encontrado.")
 
         # Retorna os grupos em formato JSON
-        return JSONResponse(content=[grupo.model_dump() for grupo in todos_grupos])
+        return JSONResponse(content={"status": 200, "resultado": [grupo.model_dump() for grupo in todos_grupos]})
 
     except Exception as e:
         print(f"Erro ao buscar grupos: {e}")
@@ -37,7 +37,7 @@ def retorna_um_grupo(id_grupo: int) -> JSONResponse:
             raise HTTPException(status_code=404, detail="Grupo não encontrado.")
 
         # Retorna o grupo em formato JSON
-        return JSONResponse(content=grupo.model_dump())
+        return JSONResponse(content={"status": "sucess", "resultado": grupo.model_dump()})
 
     except Exception as e:
         print(f"Erro ao buscar grupo por ID: {e}")

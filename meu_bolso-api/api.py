@@ -26,13 +26,13 @@ app.include_router(user_delete_router, prefix="/user", tags=["User"])   #* OK
 
 app.include_router(gastos_post_router, prefix="/gasto", tags=["Gasto"])   #* OK
 app.include_router(gastos_get_router, prefix="/gasto", tags=["Gasto"])    #* OK
-app.include_router(gastos_put_router, prefix="/gasto", tags=["Gasto"]) 
-app.include_router(gastos_delete_router, prefix="/gasto", tags=["Gasto"]) 
+app.include_router(gastos_put_router, prefix="/gasto", tags=["Gasto"])    #* OK
+app.include_router(gastos_delete_router, prefix="/gasto", tags=["Gasto"]) #* OK
 
-app.include_router(grupo_post_router, prefix="/grupo", tags=["Grupo"]) 
-app.include_router(grupo_get_router, prefix="/grupo", tags=["Grupo"]) 
-app.include_router(grupo_put_router, prefix="/grupo", tags=["Grupo"]) 
-app.include_router(grupo_delete_router, prefix="/grupo", tags=["Grupo"]) 
+app.include_router(grupo_post_router, prefix="/grupo", tags=["Grupo"])      #* OK
+app.include_router(grupo_get_router, prefix="/grupo", tags=["Grupo"])       #* OK
+app.include_router(grupo_put_router, prefix="/grupo", tags=["Grupo"])       #* OK
+app.include_router(grupo_delete_router, prefix="/grupo", tags=["Grupo"])    #* OK
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000)
