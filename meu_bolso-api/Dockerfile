@@ -7,6 +7,7 @@ COPY ./meu_bolso-api/requirements.txt /app/
 
 # Instalar dependências
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
 
 # Copiar o resto dos arquivos do projeto
 COPY ./meu_bolso-api /app/
@@ -15,12 +16,12 @@ COPY ./meu_bolso-api /app/
 EXPOSE 8000
 
 # Criar script de inicialização
-RUN echo "#!/bin/sh\n\
+RUN echo '#!/bin/bash\n\
 python manage.py migrate\n\
 python manage.py collectstatic --noinput\n\
-gunicorn meu_bolso.wsgi:application --bind 0.0.0.0:8000" > /app/start.sh
+exec gunicorn meu_bolso.wsgi:application --bind 0.0.0.0:8000' > /app/start.sh
 
 RUN chmod +x /app/start.sh
 
 # Comando para iniciar o app
-CMD ["/app/start.sh"]
+CMD ["/bin/bash", "/app/start.sh"]
