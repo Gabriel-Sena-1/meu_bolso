@@ -4,7 +4,7 @@ import os
 from pydantic import BaseModel, Field
 
 host = str(os.getenv("DB_HOST"))
-db = DatabaseManager(host, os.getenv("DB_USER"), os.getenv("DB_PASSWORD"), os.getenv("DB_NAME"))
+db = DatabaseManager(host, os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"), os.getenv("DB_NAME"))
 
 class GastoBase(BaseModel):
     nome: str
