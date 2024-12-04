@@ -5,7 +5,7 @@ FROM python:3.12-slim
 # Instalar dependências necessárias
 WORKDIR /app
 
-COPY ./requirements.txt /meu_bolso-api/requirements.txt
+COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
