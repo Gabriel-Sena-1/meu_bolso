@@ -6,11 +6,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-# Determina a URL base baseado no ambiente
-if settings.DEBUG:
-    url = 'http://127.0.0.1:8000'
-else:
-    url = 'https://meu-bolso.onrender.com'
+url = 'https://meu-bolso.onrender.com'
 
 schema_view = get_schema_view(
    openapi.Info(
