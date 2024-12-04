@@ -3,11 +3,11 @@
 FROM python:3.12-slim
 
 # Instalar dependências necessárias
-WORKDIR /app
+WORKDIR /meu_bolso-api
 
-COPY ./requirements.txt /app/requirements.txt
+COPY ./requirements.txt /meu_bolso-api/requirements.txt
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --no-cache-dir -r /meu_bolso-api/requirements.txt
 
 # Copiar o código da API para o container
 COPY . /app
