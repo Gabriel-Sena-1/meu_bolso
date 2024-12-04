@@ -1,15 +1,23 @@
-FROM python:3.12
+FROM python:3.11
 
 WORKDIR /app
 
-# Copiar apenas os arquivos da API
-COPY ./meu_bolso-api /app
+# Copiar os arquivos do projeto
+COPY . /app/
 
 # Instalar dependências
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expor a porta da aplicação
 EXPOSE 8000
 
+# Criar script de inicialização
+RUN echo "#!/bin/sh\n\
+python manage.py migrate\n\
+python manage.py collectstatic --noinput\n\
+gunicorn meu_bolso.wsgi:application --bind 0.0.0.0:8000" > /app/start.sh
+
+RUN chmod +x /app/start.sh
+
 # Comando para iniciar o app
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/app/start.sh"]
