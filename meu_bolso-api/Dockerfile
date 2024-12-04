@@ -1,18 +1,15 @@
-# Dockerfile para a API FastAPI
+FROM python:3.12
 
-FROM python:3.12-slim
-
-# Instalar dependências necessárias
 WORKDIR /app
 
-COPY ./requirements.txt /app/requirements.txt
+# Copiar apenas os arquivos da API
+COPY ./meu_bolso-api /app
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Instalar dependências
+RUN pip install -r requirements.txt
 
-# Copiar o código da API para o container
-COPY . /app
-
-# Expor a porta 8000 e rodar o aplicativo
+# Expor a porta da aplicação
 EXPOSE 8000
 
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Comando para iniciar o app
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
