@@ -2,11 +2,14 @@ FROM python:3.11
 
 WORKDIR /app
 
-# Copiar os arquivos do projeto
-COPY . /app/
+# Copiar primeiro só o requirements para aproveitar o cache do Docker
+COPY requirements.txt /app/
 
 # Instalar dependências
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar o resto dos arquivos do projeto
+COPY . /app/
 
 # Expor a porta da aplicação
 EXPOSE 8000
