@@ -45,7 +45,7 @@ class GrupoViewSet(viewsets.ModelViewSet):
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
+    serializer_class = LoginUsuarioSerializer
     
     def get_permissions(self):
         if self.action in ['create', 'login']:
@@ -62,10 +62,9 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             login(request, user)
             return Response({
                 'message': 'Login realizado com sucesso',
-                'user': LoginUsuarioSerializer(user).data  # Use a nova serializer aqui
+                'user': LoginUsuarioSerializer(user).data  # Usa a serializer simplificada
             })
         return Response(
             {'error': 'Credenciais inválidas'}, 
             status=status.HTTP_401_UNAUTHORIZED
         )
-        
