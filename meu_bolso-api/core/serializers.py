@@ -33,3 +33,8 @@ class GastoSerializer(serializers.ModelSerializer):
         model = Gasto
         fields = ['id', 'nome', 'valor', 'data', 'grupo']
         read_only_fields = ['id'] 
+        
+class LoginUsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'username', 'email']  # Inclua somente os campos necessários
