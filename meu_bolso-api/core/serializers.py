@@ -37,4 +37,5 @@ class GastoSerializer(serializers.ModelSerializer):
 class LoginUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email']  # Inclua somente os campos necessários
+        fields = ['id', 'username', 'password']  # Inclua somente os campos necessários
+        read_only_fields = ['id']
