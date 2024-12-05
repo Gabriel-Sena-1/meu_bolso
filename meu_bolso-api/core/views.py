@@ -3,7 +3,7 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Gasto, Grupo, Usuario
-from .serializers import GastoSerializer, GrupoSerializer, UsuarioSerializer
+from .serializers import GastoSerializer, GrupoSerializer, UsuarioSerializer, LoginUsuarioSerializer
 from .services.gasto_service import GastoService
 from .services.grupo_service import GrupoService
 from drf_yasg.utils import swagger_auto_schema
@@ -62,9 +62,10 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             login(request, user)
             return Response({
                 'message': 'Login realizado com sucesso',
-                'user': UsuarioSerializer(user).data
+                'user': LoginUsuarioSerializer(user).data  # Use a nova serializer aqui
             })
         return Response(
             {'error': 'Credenciais inválidas'}, 
             status=status.HTTP_401_UNAUTHORIZED
         )
+        
