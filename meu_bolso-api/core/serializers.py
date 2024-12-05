@@ -17,8 +17,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             nome=validated_data.get('nome', ''),
             sobrenome=validated_data.get('sobrenome', ''),
-            tipo_usuario=validated_data.get('tipo_usuario', 1),
-            qtd_grupos=validated_data.get('qtd_grupos', 3)
+            tipo_usuario=1,
+            qtd_grupos=3
         )
         return user
 
