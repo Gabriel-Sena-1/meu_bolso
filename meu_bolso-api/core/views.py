@@ -42,11 +42,15 @@ class GrupoViewSet(viewsets.ModelViewSet):
         gastos = GastoService.buscar_por_grupo(pk)
         serializer = GastoSerializer(gastos, many=True)
         return Response(serializer.data)
-
+    
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
-    serializer_class = LoginUsuarioSerializer
-    
+
+    def get_serializer_class(self):
+        if self.action == 'login':
+            return LoginUsuarioSerializer  # Serializer simplificado para login
+        return UsuarioSerializer  # Serializer padrão para as demais ações
+
     def get_permissions(self):
         if self.action in ['create', 'login']:
             return [permissions.AllowAny()]
@@ -57,12 +61,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
-        
+
         if user:
             login(request, user)
             return Response({
                 'message': 'Login realizado com sucesso',
-                'user': LoginUsuarioSerializer(user).data  # Usa a serializer simplificada
+                'user': self.get_serializer(user).data  # Usa o serializer configurado
             })
         return Response(
             {'error': 'Credenciais inválidas'}, 
