@@ -75,8 +75,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             status=status.HTTP_401_UNAUTHORIZED
         )
 
-    @api_view(['POST'])
-    @permission_classes([IsAuthenticated])
-    def sair(request):
+    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
+    def logout(self, request):
         logout(request)
         return Response({'message': 'Logout efetuado com sucesso'})
