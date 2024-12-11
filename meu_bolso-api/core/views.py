@@ -8,7 +8,9 @@ from .services.gasto_service import GastoService
 from .services.grupo_service import GrupoService
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -72,3 +74,9 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             {'error': 'Credenciais inválidas'}, 
             status=status.HTTP_401_UNAUTHORIZED
         )
+
+    @api_view(['POST'])
+    @permission_classes([IsAuthenticated])
+    def sair(request):
+        logout(request)
+        return Response({'message': 'Logout efetuado com sucesso'})
