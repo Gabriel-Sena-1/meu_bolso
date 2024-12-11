@@ -78,5 +78,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
     def logout(self, request):
         username = request.data.get('username')
-        logout(username)
-        return Response({'message': 'Logout efetuado com sucesso'})
+        password = request.data.get('password')
+        user_logout = logout(username=username, password=password)
+        
+        return Response({'message': 'Logout efetuado com sucesso', 'user': self.get_serializer(user_logout).data})
