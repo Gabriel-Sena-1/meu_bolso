@@ -3,7 +3,7 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Gasto, Grupo, Usuario
-from .serializers import GastoSerializer, GrupoSerializer, UsuarioSerializer, LoginUsuarioSerializer
+from .serializers import GastoSerializer, GrupoSerializer, UsuarioSerializer, LoginUsuarioSerializer, LogoutUsuarioSerializer
 from .services.gasto_service import GastoService
 from .services.grupo_service import GrupoService
 from drf_yasg.utils import swagger_auto_schema
@@ -50,8 +50,10 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action == 'login':
-            return LoginUsuarioSerializer  # Serializer simplificado para login
-        return UsuarioSerializer  # Serializer padrão para as demais ações
+            return LoginUsuarioSerializer
+        if self.action == 'logout':
+            return LogoutUsuarioSerializer
+        return UsuarioSerializer  
 
     def get_permissions(self):
         if self.action in ['create', 'login']:
