@@ -38,4 +38,8 @@ class LoginUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ['id', 'username', 'password']  # Inclua somente os campos necessários
-        
+
+class LogoutUsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'username']  # Inclua somente os campos necessários
